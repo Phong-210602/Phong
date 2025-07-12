@@ -152,10 +152,10 @@ return [
     |
     */
 
-    'layout_topnav' => null,
+    'layout_topnav' => false,
     'layout_boxed' => null,
-    'layout_fixed_sidebar' => null,
-    'layout_fixed_navbar' => null,
+    'layout_fixed_sidebar' => true,
+    'layout_fixed_navbar' => true,
     'layout_fixed_footer' => null,
     'layout_dark_mode' => null,
 
@@ -382,15 +382,18 @@ return [
             'icon_color' => 'red',
             'url' => '#',
         ],
+        
         [
-            'text' => 'warning',
-            'icon_color' => 'yellow',
-            'url' => '#',
+            'text' => 'Đăng nhập',
+            'url'  => 'login',
+            'icon' => 'fas fa-sign-in-alt',
+            'topnav_right' => true,
         ],
         [
-            'text' => 'information',
-            'icon_color' => 'cyan',
-            'url' => '#',
+            'text' => 'Đăng ký',
+            'url'  => 'register',
+            'icon' => 'fas fa-user-plus',
+            'topnav_right' => true,
         ],
     ],
 
