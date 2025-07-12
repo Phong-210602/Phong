@@ -10,7 +10,5 @@ class HelloController extends Controller
         $name = "<strong>Chữ in đậm</strong>";
         return view('Home',['name' => $name]);
         $hello;
-        
     }
-    
 }
