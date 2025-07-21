@@ -1,4 +1,4 @@
-<form method="POST" action="{{ route('users.store') }}">
+{{-- <form method="POST" action="{{ route('users.store') }}">
     @csrf
     <input name="first_name" placeholder="First Name">
     <input name="last_name" placeholder="Last Name">
@@ -12,4 +12,4 @@
     </select>
     <input name="role" placeholder="Role">
     <button type="submit">Create</button>
-</form>
+</form> --}}

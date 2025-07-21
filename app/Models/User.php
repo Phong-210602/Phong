@@ -5,25 +5,37 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Enums\UserStatus;
 
-class User extends Authenticatable
+class User extends Authenticatable // ORM
 {
-    use HasFactory, Notifiable;
 
+
+    // public function isActive()
+    // {
+    //     return $this->status == self::STATUS_ACTIVE;
+    // }
+    use HasFactory, Notifiable;
+// Khai báo để sử dụng cho database
     protected $fillable = [
-        'first_name',     
-        'last_name', 
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'password',
         'address',
         'status',
-        'role', 
+        'role',
     ];
+
+
+    protected $casts = [ // $casts giúp là việc với Enum cho trường Status
+        // ... existing casts ...
+        'status' => UserStatus::class,
+    ];
+
 
     public function getNameAttribute()
     {
         return $this->first_name . ' ' . $this->last_name;
     }
-
 }

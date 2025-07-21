@@ -3,70 +3,53 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\Auth\RegisterRequest;
+use App\Services\AuthService;
 
+/**
+ * class RegisterController
+ * 
+ * Mục đích: ĐIÈU PHỐI (coordinate) - không chứa logic xử lý
+ */
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
+    protected $redirectTo = '/login';
 
-    use RegistersUsers;
+    // Inject AuthService vào Controller
+    private $authService;
 
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function __construct(AuthService $authService)
     {
         $this->middleware('guest');
+        $this->authService = $authService;
     }
 
     /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * Hiển thị form đăng ký
      */
-    protected function validator(array $data)
+    public function showRegistrationForm()
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+        return view('auth.register');
     }
 
     /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\Models\User
+     * Xử lý đăng ký - CHỈ ĐIỀU PHỐI
+     * 
+     * @param RegisterRequest $request Request đã được validation tự động
      */
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+    public function register(RegisterRequest $request)
+    {   
+        /** @var \Illuminate\Http\Request $request */
+        // Bước 1: Validation đã tự động chạy trong RegisterRequest
+
+        // Bước 2: Gọi service để xử lý logic đăng ký
+        $result = $this->authService->registerUser($request->validated());
+        if (!$result['success']) {
+            return redirect()->back()
+                ->withErrors(['general' => $result['message']])
+                ->withInput($request->except('password', 'password_confirmation'));
+        }
+        return redirect($this->redirectTo)
+            ->with('success', $result['message']);
     }
 }

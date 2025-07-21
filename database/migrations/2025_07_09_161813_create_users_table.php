@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('address')->nullable();
-            $table->boolean('status')->default(0);
+            $table->string('address')->nullable(); // Giá trị mặc định không cần nhập
+            $table->boolean('status')->default(1);
             $table->enum('role', ['admin', 'user'])->default('user');
             $table->timestamps();
         });

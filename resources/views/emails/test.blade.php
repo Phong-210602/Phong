@@ -1,1 +1,10 @@
-<h1>Đây là email test gửi qua Mailtrap!</h1>
+<!DOCTYPE html>
+<html> 
+<head> 
+    <meta charset="urt-8">
+    <title>Chào bạn </title>
+</head>
+<body> 
+    <p> Cảm ơn bạn đã đăng ký </p>
+</body>
+</html>

@@ -1,61 +1,158 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Cấu trúc thư mục trong Laravel 12 - Hiểu đúng ngay từ đầu
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Laravel là một framework PHP mạnh mẽ và phổ biến, được thiết kế với cấu trúc thư mục rõ ràng, giúp lập trình viên dễ dàng quản lý mã nguồn. Việc **hiểu rõ cấu trúc thư mục** ngay từ đầu sẽ giúp bạn **làm việc hiệu quả**, **dễ debug**, và **phát triển dự án quy mô lớn** dễ dàng hơn.
 
-## About Laravel
+Dưới đây là phần giải thích chi tiết từng thư mục chính trong Laravel 12.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 1. `app\` - Trung tâm logic của ứng dụng 
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Đây là nơi chứa **logic cốt lõi** của ứng dụng Laravel. Bạn sẽ làm việc ở đây rất thường xuyên.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Các thư mục con:
 
-## Learning Laravel
+- `Http` : Thư mục này là cầu nối giữa **request từ người dùng**  và  **phản hồi từ ứng dụng**. Gồm 3 phần quan trọng: Controller, Middleware, Form Request.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### - `Controllers` : Bộ điều khiển
+- Chịu trách nhiệm **xử lý request**, gọi model, và trả về response (thường là view hoặc JSON).
+-Mỗi Controller thường đại diện cho 1 nhóm chức năng, ví dụ:
+`UserController`,  `ProductController`
+- Tạo controller bằng lệnh `php artisan make:controller UserController`
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### - `Middleware` : Lớp bảo về giữa request và controller
+- Dùng để kiểm tra hoặc can thiệp vào request trước khi nó đến controller.
+- Ví dụ : xác thực người dùng (auth), kiểm tra quyền (isAdmin), giới hạn truy cập IP. . .
+- Tạo Middleware bằng lệnh `php artisan make::middleware AuthMiddleware`
 
-### Premium Partners
+### - `Request` : Kiểm tra dữ liệu đầu vào
+- Đây là nơi xử lý Form Request Validation - kiểm tra dữ liệu người dùng gửi lên (từ form hoặc API).
+- Giúp tách phần kiểm tra ra khỏi Controller => sạch sẽ, dễ bảo trì.
+- Ví dụ: `LoginRequest`, `CreateUserRequest`, . . .
+- Tạo request bằng lệnh `php artisan make:request LoginRequest`
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+-----
 
-## Contributing
+- `Models` : Nơi đặt các class model, đại diện cho bảng trong CSDL.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- `Providers` : Nơi đăng ký các Service Providers (khởi tạo logic hoặc dịch vụ).
 
-## Code of Conduct
+##2. `bootstrap` - khởi động ứng dụng
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- Chứa file `app.php` để khởi tạo và bootstrap ứng dụng.
+- Thư mục `cache/` : chứa file cache cấu hình giúp tăng tốc độ xử lý.
 
-## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+----
 
-## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+##3. `config` - Cấu hình hệ thống
+
+Chứa tất cả các tệp cấu hình của ứng dụng.
+
+**Ví dụ**
+
+- `app.php` : cấu hình tên app, timezone, locale,. . .
+- `database.php` : thông tin kết nối CSDL.
+- `mail.php` : cấu hình gửi mail, . . .
+
+**Tip** : Laravel tự động load tất cả các file trong thư mục  `config`.
+
+## 4. ``database/ - Tất cả liên quan tới dữ liệu
+
+- `migrations` : quản lý các thay đổi cấu trúc bảng.
+- `seeders` : thêm dữ liệu mẫu cho bảng.
+- `factories` : tạo dữ liệu mẫu để test.
+
+**Gợi ý** : Có thể chạy `php artisan migrate -- seed` để tạo bảng và thêm dữ liệu mẫu nhanh chóng.
+
+
+---
+
+
+## 5. `public` - Cổng vào của ứng dụng 
+
+Đây là thư mục duy nhất trình duyệt wed truy cập được.
+
+- Chứa `index.php` - file chạy chính của Laravel.
+- Chứa tài nguyên tĩnh: ảnh, CSS, JavaScript, . . .
+
+Nếu deploy online, cấu hình web server trỏ vào thư mục `public`.
+ 
+
+----
+
+
+## 6. `resources` - Giao diện người dùng & ngôn ngữ
+
+- `views/` : nơi chứa file Blade template (HTML)
+- `lang/` : chứa file ngôn ngữ đa ngữ (đa ngôn ngữ).
+- `js`, `css/` : nơi bạn viết front-end (Nếu dùng Laravel Mix/Vite).
+
+**Thường dùng nhiều nhất là `views/`** để tạo giao diện.
+
+
+---
+
+
+## 7. `routes/` - Định nghĩa các đường dẫn trong ứng dụng (URL)
+
+- `web.php` : route cho giao diện web.
+- `api.php` : route cho RESTful API.
+- `console.php` : dùng cho Broadcast event qua websocket.
+
+**Khi bạn truy cập 1 đường dẫn** Laravel sẽ kiểm tra route ở đây trước.
+
+---
+
+
+## 8. `storage` - Lưu trữ tạm & người dùng
+
+
+- `app` : lưu các file upload từ người dùng.
+- `framework` : cache, sessions, views, . . .
+- `logs` : ghi log hoạt động ứng dụng.
+
+Thư mục này thường cần phân quyền ghi khi deploy.
+
+
+## 9. `tests` - Kiểm thử ứng dụng
+
+
+- `Feature` : kiểm thử tính năng (sát với thực tế)
+- `Unit` : kiểm thử đơn vị (logic nhỏ, độc lập).
+
+Laravel sử dụng PHPUnit để test. Bạn có thể viết test để kiểm tra tính ổn định hệ thống.
+
+----
+
+
+## 10. `vendor` - Thư viện bên thứ ba
+
+
+Chứa toàn bộ package được cài qua Composer. Bạn không nên chỉnh sửa trực tiếp file trong này.
+
+
+----
+
+
+## 11. Các tệp gốc quan trọng
+
+- `.env` : cấu hình môi trường (database, private key, . . .)
+- `conposer.json` : khai báo các dependency
+- `artisan` : CLI giúp chạy các lệnh Laravel như migrate, route:list, . . .
+
+
+--- 
+
+
+
+## Tổng kết cấu trúc thư mục trong Laravel sẽ giúp bạn:
+
+- Dễ dàng điều hướng và phát triển dự án.
+- Giảm thời gian tìm kiếm file.
+- Viết mã sạch (clean code), dễ bảo trì.
+
+Hãy dành thời igan **mở từng thư mục, đọc và thực hành** để nhanh chóng làm chủ Laravel nhé!

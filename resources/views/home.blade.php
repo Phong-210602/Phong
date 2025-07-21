@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-
+{{-- @extends('layouts.master') --}}
 @section('title', 'Trang chủ')
 
 @section('content')
@@ -9,7 +9,12 @@
 @push('scripts')
     <script>alert('Xin chào');</script>
 @endpush
-<a href="{{ route('users.index') }}">Tạo user</a>
+@if ($errors->any())
+    <div class="alert alert-danger mt-2">
+        {{ $errors->first() }}
+    </div>
+@endif
+
    {{-- <p> {!! $name !!} </p>
    @{{ message }}
    {{ $hello ?? 'Khách' }} --}}
