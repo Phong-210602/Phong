@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\UserStatus;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -20,6 +21,7 @@ class AdminUserSeeder extends Seeder
             'email'       =>  'nguyenphongmkey2002@gmail.com',
             'password'    => Hash::make('123456'),
             'role'        => 'admin',
+            'status'      => UserStatus::APPROVED, 
             'created_at'  => now(),
             'updated_at'  => now(),
         ]);

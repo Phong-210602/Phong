@@ -35,18 +35,18 @@ class AuthService
         // LOGIC 2: Kiểm tra user có tồn tại không
         if (!$user) {
             return [
-                'success' => false,
+                'success' => false, // đổi lại thành true thì vẫn trả ra lỗi được: Kiểu dữ liệu Boolean
                 'message' => 'Email không tồn tại trong hệ thống',
-                'field' => 'email'
+                'field' => 'email' // Kiểu dữ liệu là string
             ];
         }
 
         // LOGIC 3: Kiểm tra password có đúng không (so sánh với password đã mã hoá)
-        if(!Hash::check($password, $user->password)){
+        if(!Hash::check($password, $user->password)){ // *!* phủ định mật khẩu sai, ->truy cập thuộc tính password của $user
             return [
                 'success' => false,
                 'message' => 'Mật khẩu không chính xác',
-                'field' => 'password'
+                'field' => 'password'   
             ];
         }
 
@@ -58,7 +58,7 @@ class AuthService
                 'field' => 'email'
             ];
         }
-        // LOGIC 5: Đăng nhập thành công - tạo sesstion cho user
+        // LOGIC 5: Đăng nhập thành công - tạo session cho user
         Auth::login($user);
 
         return [
@@ -78,7 +78,7 @@ class AuthService
         try {
             // LOGIC 1: Tạo user mới trong database
             $user = User::create([
-                'first_name' => $data['first_name'],
+                'first_name' => $data['first_name'], //$data tạo 1 mảng mới có key là first_name
                 'last_name' => $data['last_name'],
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']), // LOGIC 2: Mã hoá password

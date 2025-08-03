@@ -26,8 +26,8 @@ class LoginController extends Controller
 
     public function __construct(AuthService $authService)
     {
-        $this->middleware('guest')->except('logout');
-        $this->middleware('auth')->only('logout');
+        $this->middleware('guest')->except('logout'); // Chặn người đã đăng nhập xem form login, trừ hành động logout
+        $this->middleware('auth')->only('logout'); // Chỉ những ai đăng nhập mới được logout
         $this->authService = $authService; // Lưu Service vào biến
     }
 

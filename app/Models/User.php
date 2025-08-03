@@ -38,4 +38,11 @@ class User extends Authenticatable // ORM
     {
         return $this->first_name . ' ' . $this->last_name;
     }
+
+    // Thêm relationship với Post
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
 }

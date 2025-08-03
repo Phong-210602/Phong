@@ -1,30 +1,79 @@
-@extends('layouts.master')
+@extends('layouts.adminlte')
 
 @section('content')
-<div class="container mt-4">
-    <h2>Tạo bài viết mới</h2>
-    <form action="{{ route('posts.store') }}" method="POST">
-        @csrf
-        <div class="mb-3">
-            <label for="title" class="form-label">Tiêu đề</label>
-            <input type="text" name="title" class="form-control" value="{{ old('title') }}" required>
-            @error('title') <div class="text-danger">{{ $message }}</div> @enderror
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Tạo bài viết mới</h1>
+                </div>
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="content" class="form-label">Nội dung</label>
-            <textarea name="content" class="form-control" rows="5" required>{{ old('content') }}</textarea>
-            @error('content') <div class="text-danger">{{ $message }}</div> @enderror
+    </section>
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Thông tin bài viết</h3>
+                </div>
+                {{-- <form action="{{ route('posts.store') }}" method="POST"> --}}
+                <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="mb-3"> 
+                        <label class="form label">Thumbnail</label> <br>
+                         <input type="file" name="thumbnail" accept"image/*"/>
+                            @error('thumbnail')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Tiêu đề</label>
+                            <input type="text" class="form-control" name="title" value="{{ old('title') }}" required>
+                            @error('title')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label>Mô tả</label>
+                            <textarea class="form-control" name="description" rows="3">{{ old('description') }}</textarea>
+                            @error('description')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label>Nội dung</label>
+                            {{-- <textarea class="form-control" name="content" rows="10" required>{{ old('content') }}</textarea> --}}
+                            <textarea id="content" class="form-control" name="content" rows="10" required>{{ old('content') }}</textarea>
+                            @error('content')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label>Ngày xuất bản</label>
+                            <input type="datetime-local" class="form-control" name="publish_date" value="{{ old('publish_date') }}">
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Tạo bài viết</button>
+                        <a href="{{ route('posts.index') }}" class="btn btn-secondary">Hủy</a>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="status" class="form-label">Trạng thái</label>
-            <select name="status" class="form-control" required>
-                <option value="draft" {{ old('status') == 'draft' ? 'selected' : '' }}>Nháp</option>
-                <option value="published" {{ old('status') == 'published' ? 'selected' : '' }}>Công khai</option>
-            </select>
-            @error('status') <div class="text-danger">{{ $message }}</div> @enderror
-        </div>
-        <button type="submit" class="btn btn-success">Lưu</button>
-        <a href="{{ route('posts.index') }}" class="btn btn-secondary">Quay lại</a>
-    </form>
+    </section>
 </div>
+@endsection
+@section('scripts')
+<script>
+    $(document).ready(function() {
+        $('#content').summernote({
+        });
+    });
+</script>
 @endsection

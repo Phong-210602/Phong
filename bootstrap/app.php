@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -15,6 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // Đăng ký alias cho middleware
         $middleware->alias([
             'check.user.status' => CheckUserStatus::class,
+            'admin' => AdminMiddleware::class
         ]);
         
         // Hoặc đăng ký middleware global (chạy cho tất cả requests)

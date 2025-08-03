@@ -50,5 +50,6 @@ class TestUserSeeder extends Seeder
             'status' => UserStatus::APPROVED,
             'role' => 'user',
         ]);
+        
     }
 }
