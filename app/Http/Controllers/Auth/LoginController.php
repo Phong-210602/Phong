@@ -19,10 +19,10 @@ use Illuminate\Http\Request;
 class LoginController extends Controller
 {
     protected $redirectTo = '/';
-    
+
     // Inject AuthService vào Controller
     private $authService;
-    
+
 
     public function __construct(AuthService $authService)
     {
@@ -59,16 +59,16 @@ class LoginController extends Controller
             //Nếu đăng nhập thất bại - trả về lỗi
             /** @var \Illuminate\Http\Request $request */
             return redirect()->back()
-                ->withErrors([$result['field']=> $result['message']])
+                ->withErrors([$result['field'] => $result['message']])
                 ->withInput($request->only('email'));
         }
 
         // Nếu đăng nhập thành công - tạo sesstion mới và redirect
         /** @var \Illuminate\Http\Request $request */
-      $request->session()->regenerate();
-    // Thêm flash message và chuyển hướng đến danh sách bài viết
-    return redirect()->route('posts.index')->with('success', 'Đăng nhập thành công');
-}
+        $request->session()->regenerate();
+        // Thêm flash message và chuyển hướng đến danh sách bài viết
+        return redirect()->route('posts.index')->with('success', 'Đăng nhập thành công');
+    }
     /**
      * Xử lý đăng xuất - CHỈ ĐIỀU PHỐI
      */

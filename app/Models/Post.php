@@ -5,10 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Enums\PostStatus;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Storage;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Post extends Model
+class Post extends Model implements HasMedia
 {   //Khai báo để sử dụng cho database
+    use HasFactory, InteractsWithMedia;
+    use SoftDeletes;
+
     protected $fillable = [
         'user_id',
         'title',
@@ -21,11 +28,7 @@ class Post extends Model
     ];
     public function getThumbnailUrlAttribute()
     {
-        if ($this->thumbnail) {
-            return Storage::url($this->thumbnail);
-        }
-
-        return asset('images/default-thumbnail.jpg'); // nếu không có ảnh
+    return $this->getFirstMedia()?->getUrl() ?? '/images/default-thumbnail.jpg';
     }
 
     public function user(): BelongsTo
@@ -50,4 +53,5 @@ class Post extends Model
     {
         return $query->where('status', PostStatus::PENDING);
     }
+    
 }

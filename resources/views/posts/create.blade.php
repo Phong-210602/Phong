@@ -23,8 +23,8 @@
                     @csrf
                     <div class="mb-3"> 
                         <label class="form label">Thumbnail</label> <br>
-                         <input type="file" name="thumbnail" accept"image/*"/>
-                            @error('thumbnail')
+                         <input type="file" id="image" name="image">
+                            @error('image')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
