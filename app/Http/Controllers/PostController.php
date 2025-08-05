@@ -70,9 +70,10 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Post $post)
     {
-        //
+
+        return view('posts.show', compact('post'));
     }
 
     /**
@@ -127,5 +128,15 @@ class PostController extends Controller
     {
         $post->delete();
         return redirect()->route('posts.index')->with('success', 'Xoá bài viết thành công!');
+    }
+    public function destroyAll()
+    {
+        // dd(123);
+        $user = Auth::user();
+
+        // Dùng relationship để xoá toàn bộ bài viết của user hiện tại
+        $user->posts()->delete();
+
+        return redirect()->route('posts.index')->with('success', 'Đã xoá tất cả bài viết của bạn.');
     }
 }

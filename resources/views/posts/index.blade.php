@@ -37,6 +37,17 @@
                         </div>
                         <div class="card-body">
                             @if ($posts->count() > 0)
+                                </form>
+                                <div class="mb-3">
+                                    <form action="{{ route('posts.destroyAll') }}" method="POST"
+                                        onsubmit="return confirm('Bạn có chắc muốn xoá tất cả bài viết?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger">
+                                            Xoá tất cả bài viết
+                                        </button>
+                                    </form>
+                                </div>
                                 <table id="posts-table" class="table table-bordered table-striped">
 
                                     <thead>
@@ -82,7 +93,7 @@
 
                                                     <form action="{{ route('posts.destroy', $post) }}" method="POST"
                                                         style="display:inline"
-                                                        onsubmit="return confirm('Bạn có chắc muốn xóa?')">
+                                                        onsubmit="return confirm('Xác nhận xoá')">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-sm btn-danger" title="Xoá">
@@ -97,7 +108,7 @@
                                                             </svg>
                                                         </button>
                                                     </form>
-                                                    <!-- Nút sửa -->
+                                                    
                                                     <a href="{{ route('posts.edit', $post) }}" class="btn btn-sm btn-info"
                                                         title="Sửa">
                                                         <svg viewBox="0 0 24 24" width="20" height="20"
@@ -109,7 +120,7 @@
                                                                 d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
                                                         </svg>
                                                     </a>
-                                                    <!-- Nút xem -->
+                                                    
                                                     <a href="{{ route('posts.show', $post) }}"
                                                         class="btn btn-sm btn-secondary" title="Xem">
                                                         <svg viewBox="0 0 24 24" width="20" height="20"
@@ -119,7 +130,7 @@
                                                             <circle cx="12" cy="12" r="3" />
                                                         </svg>
                                                     </a>
-                                                    <!-- Nút xoá -->
+                                                    
                                                 </td>
                                             </tr>
                                         @endforeach

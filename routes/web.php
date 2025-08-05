@@ -42,7 +42,11 @@ Route::middleware(['auth', 'check.user.status'])->group(function(){
     Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
     Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
     Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
+
+
 });
+Route::delete('/user/posts/delete-all', [PostController::class, 'destroyAll'])->name('posts.destroyAll');
+
 
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
