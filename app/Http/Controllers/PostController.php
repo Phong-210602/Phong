@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
@@ -84,7 +85,7 @@ class PostController extends Controller
     {
         // Chỉ cho phép admin hoặc chủ bài viết
         if (auth()->user()->role !== 'admin' && $post->user_id != Auth::id()) {
-            return redirect()->route('posts.index')->with('error', 'Bạn không có quyền sửa bài viết này.');
+             abort(404);
         }
 
         return view('posts.edit', compact('post'));
@@ -94,19 +95,13 @@ class PostController extends Controller
      * Update the specified resource in storage.
      */
     // Cập nhật bài viết
-    public function update(Request $request,  Post $post)
+    public function update(UpdatePostRequest $request,  Post $post)
     {
         // Kiểm tra quyền sửa - chỉ cho phép sửa bài viết
         if ($post->user_id != Auth::id()) {
             return redirect()->route('posts.index');
         }
 
-        // Kiểm tra dữ liệu
-        $request->validate([
-            'title' => 'required|max:100',
-            'description' => 'nullable|max:200',
-            'content' => 'required',
-        ]);
 
         // Cập nhật bài viết
         $post->update([
@@ -115,7 +110,7 @@ class PostController extends Controller
             'description' => $request->description,
             'content' => $request->content,
             'publish_date' => $request->publish_date,
-            'status' => 1,
+            'status' => 1,2,3,
         ]);
         return redirect()->route('posts.index')->with('success', 'Cập nhập bài viết thành công!');
     }
@@ -127,7 +122,10 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
-        return redirect()->route('posts.index')->with('success', 'Xoá bài viết thành công!');
+        return response()->json([
+        'success' => true,
+        'message' => 'Xoá bài viết thành công!'
+    ]);
     }
     public function destroyAll()
     {

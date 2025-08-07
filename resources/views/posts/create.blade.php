@@ -30,23 +30,26 @@
                         </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <label>Tiêu đề</label>
-                            <input type="text" class="form-control" name="title" value="{{ old('title') }}" required>
+                            <label>Tiêu đề*</label>
+                            <input type="text" class="form-control" name="title" value="{{ old('title') }}">
+                            {{-- <input type="text" class="form-control" name="title"> --}}
                             @error('title')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
 
                         <div class="form-group">
-                            <label>Mô tả</label>
+                            <label>Mô tả*</label>
                             <textarea class="form-control" name="description" rows="3">{{ old('description') }}</textarea>
+                            {{-- <input type="text" class="form-control" name="description" value="{{ old('description') }}" required> --}}
+
                             @error('description')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
 
                         <div class="form-group">
-                            <label>Nội dung</label>
+                            <label>Nội dung*</label>
                             {{-- <textarea class="form-control" name="content" rows="10" required>{{ old('content') }}</textarea> --}}
                             <textarea id="content" class="form-control" name="content" rows="10" required>{{ old('content') }}</textarea>
                             @error('content')

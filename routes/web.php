@@ -13,7 +13,7 @@ use App\Http\Controllers\PostController;
 // Route::get('/', function(){
 //     return view ('test');
 // });
-Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('dangnhap');
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
@@ -25,9 +25,10 @@ Route::middleware(['auth',  'check.user.status'])->group(function () {
     Route::post('/users', [UserController::class, 'store'])->name('users.store');
 
     Route::middleware(['auth', 'admin'])->group(function () {
-    Route::patch('/users/{id}/approve', [UserController::class, 'approve'])->name('users.approve');
-    Route::patch('/users/{id}/reject', [UserController::class, 'reject'])->name('users.reject');
-    Route::patch('users{id}/block', [UserController::class, 'block'])->name('users.block');
+    Route::patch('/users/{id}/approve', [UserController::class, 'approve'])->name('users.approve'); // phê duyệt
+    Route::patch('/users/{id}/reject', [UserController::class, 'reject'])->name('users.reject'); // từ chối
+    Route::patch('users{id}/block', [UserController::class, 'block'])->name('users.block'); // bị khoá
+    // Route::patch('users/{id}/unblock', [UserController::class, 'block'])->name('users.unblock'); // mở khoá
 });
 
     

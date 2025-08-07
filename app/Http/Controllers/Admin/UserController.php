@@ -43,6 +43,14 @@ class UserController extends Controller
         return redirect()->route('users.index')
             ->with('success', 'Đã khoá người dùng thành công!');
     }
+    public function unblock($id)
+    {
+        $user = User::findOrFail($id);
+        $user->update(['status' => UserStatus::UNBLOCK]);
+
+        return redirect()->route('users.index')
+            ->with('success', 'Đã mở khoá người dùng thành công!');
+    }
 }
 
 

@@ -52,13 +52,13 @@
 
                                     <thead>
                                         <tr>
+                                            <th>Ảnh</th>
                                             <th>ID</th>
                                             @if (auth()->user()->role === 'admin')
                                                 <th>User</th>
                                             @endif
                                             <th>Tiêu đề</th>
                                             <th>Mô tả</th>
-                                            <th>Ảnh</th>
                                             <th>Trạng thái</th>
                                             <th>Ngày tạo</th>
                                             <th>Thao tác</th>
@@ -67,48 +67,48 @@
                                     <tbody>
                                         @foreach ($posts as $post)
                                             <tr>
-                                                <td>{{ $post->id }}</td>
-                                                @if (auth()->user()->role === 'admin')
-                                                    <td>{{ $post->user->name }}</td>
-                                                @endif
-                                                <td>{{ $post->title }}</td>
-                                                <td>{{ $post->description }}</td>
                                                 <td class="px-6 py-4 whitespace-nowrap">
                                                     <img class="w-8 h-8 rounded-ful" style="width: 100px"
                                                         src="{{ $post->thumbnail_url }}" />
                                                 </td>
+                                                <td>{{ $post->id }}</td>
+                                                @if (auth()->user()->role === 'admin')
+                                                    <td>{{ $post->user->name }}</td>
+                                                @endif
+                                                <td style="word-wrap: break-word; max-width: 200px;">{{ $post->title }}
+                                                </td>
+                                                <td style="word-wrap: break-word; max-width: 200px;">
+                                                    {{ $post->description }}</td>
+
+
 
                                                 <td>
-                                                    @if ($post->status == 0)
-                                                        <span class="badge bg-secondary">Bản nháp</span>
-                                                    @elseif($post->status == 1)
-                                                        <span class="badge bg-success">Đã xuất bản</span>
-                                                    @elseif($post->status == 2)
-                                                        <span class="badge bg-warning text-dark">Chờ duyệt</span>
+                                                    @if ($post->status ==  App\Enums\PostStatus::DRAFT->value)
+                                                        <span class="badge bg-secondary">Bài viết mới</span>
+                                                    @elseif($post->status == App\Enums\PostStatus::PUBLISHED->value)
+                                                        <span class="badge bg-success">Chờ duyệt</span>
+                                                    @elseif($post->status == App\Enums\PostStatus::PENDING->value)
+                                                        <span class="badge bg-warning text-dark">Được duyệt</span>
                                                     @endif
                                                 </td>
 
                                                 <td>{{ $post->created_at->format('d/m/Y') }}</td>
                                                 <td>
 
-                                                    <form action="{{ route('posts.destroy', $post) }}" method="POST"
-                                                        style="display:inline"
-                                                        onsubmit="return confirm('Xác nhận xoá')">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-sm btn-danger" title="Xoá">
-                                                            <svg viewBox="0 0 24 24" width="20" height="20"
-                                                                stroke="currentColor" stroke-width="2" fill="none"
-                                                                stroke-linecap="round" stroke-linejoin="round">
-                                                                <polyline points="3 6 5 6 21 6" />
-                                                                <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
-                                                                <path d="M10 11v6" />
-                                                                <path d="M14 11v6" />
-                                                                <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
-                                                            </svg>
-                                                        </button>
-                                                    </form>
-                                                    
+                                                    <button type="button" class="btn btn-sm btn-danger delete-btn"
+                                                        data-id="{{ $post->id }}" title="Xoá">
+                                                        <svg viewBox="0 0 24 24" width="20" height="20"
+                                                            stroke="currentColor" stroke-width="2" fill="none"
+                                                            stroke-linecap="round" stroke-linejoin="round">
+                                                            <polyline points="3 6 5 6 21 6" />
+                                                            <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+                                                            <path d="M10 11v6" />
+                                                            <path d="M14 11v6" />
+                                                            <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+                                                        </svg>
+                                                    </button>
+
+
                                                     <a href="{{ route('posts.edit', $post) }}" class="btn btn-sm btn-info"
                                                         title="Sửa">
                                                         <svg viewBox="0 0 24 24" width="20" height="20"
@@ -120,7 +120,7 @@
                                                                 d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
                                                         </svg>
                                                     </a>
-                                                    
+
                                                     <a href="{{ route('posts.show', $post) }}"
                                                         class="btn btn-sm btn-secondary" title="Xem">
                                                         <svg viewBox="0 0 24 24" width="20" height="20"
@@ -130,7 +130,7 @@
                                                             <circle cx="12" cy="12" r="3" />
                                                         </svg>
                                                     </a>
-                                                    
+
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -151,7 +151,54 @@
     @section('scripts')
         <script>
             $(document).ready(function() {
-                $('#posts-table').DataTable();
+                $('#posts-table').DataTable({
+                    "paging": true,
+                    "lengthChange": true,
+                    "searching": true,
+                    "ordering": true,
+                    "info": true,
+                    "autoWidth": true,
+                    "responsive": true,
+                    "language": {
+                        "paginate": {
+                            "first": "Đầu",
+                            "last": "Cuối",
+                            "next": "Sau",
+                            "previous": "Trước"
+                        },
+                    }
+                });
+
+                $('#posts-table').on('click', '.delete-btn', function() {
+                    let id = $(this).data('id');
+                    let token = $('input[name="_token"]').val();
+
+                    if (confirm('Bạn có chắc muốn xoá?')) {
+                        $.ajax({
+                            url: '/posts/' + id,
+                            type: 'DELETE',
+                            data: {
+                                _token: token
+                            },
+                            success: function(res) {
+                                if (res.success) {
+                                    alert(res.message);
+                                    // Xoá dòng khỏi DataTable
+                                    table
+                                        .row($('#posts-table button[data-id="' + id + '"]').parents(
+                                            'tr'))
+                                        .remove()
+                                        .draw();
+                                } else {
+                                    alert('Không thể xoá bài viết');
+                                }
+                            },
+                            error: function() {
+                                alert('Có lỗi xảy ra khi xoá');
+                            }
+                        });
+                    }
+                });
 
             });
         </script>

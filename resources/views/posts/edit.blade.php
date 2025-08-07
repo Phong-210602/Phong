@@ -40,11 +40,27 @@
                             <div class="form-group">
                                 <label>Tiêu đề</label>
                                 <input type="text" class="form-control" name="title"
-                                    value="{{ old('title', $post->title) }}" required>
+                                    value="{{ old('title', $post->title) }}">
                                 @error('title')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
+                            @if (auth()->user()->role === 'admin')
+                            <div class="form-group">
+                                <label for="status">Trạng thái</label>
+                                <select name="status" id="status">
+                                    <option value="{{ App\Enums\PostStatus::DRAFT->value }}"
+                                        {{ $post->status == App\Enums\PostStatus::DRAFT->value ? 'selected' : '' }}>Bài viết mới</option>
+                                    <option value="{{ App\Enums\PostStatus::PUBLISHED->value }}"
+                                        {{ $post->status == App\Enums\PostStatus::PUBLISHED->value ? 'selected' : '' }}>Chờ duyệt </option>
+                                    <option value="{{ App\Enums\PostStatus::PENDING->value }}"
+                                        {{ $post->status == App\Enums\PostStatus::PENDING->value ? 'selected' : '' }}>Được duyệt</option>
+
+                                    {{-- <option value="" {{ $post->status == 2 ? 'selected' : '' }}>Đã xuất bản</option>
+                                    <option value="" {{ $post->status == 3 ? 'selected' : '' }}>Chờ duyệt</option> --}}
+                                </select>
+                            </div>
+                            @endif
 
                             <div class="form-group">
                                 <label>Mô tả</label>
@@ -56,7 +72,7 @@
 
                             <div class="form-group">
                                 <label>Nội dung</label>
-                                <textarea id="content" class="form-control" name="content" rows="10" required>{{ old('content', $post->content) }}</textarea>
+                                <textarea id="content" class="form-control" name="content" rows="10">{{ old('content', $post->content) }}</textarea>
                                 @error('content')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
