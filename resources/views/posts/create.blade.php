@@ -29,7 +29,7 @@
                             @enderror
                         </div>
                     <div class="card-body">
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <label>Tiêu đề*</label>
                             <input type="text" class="form-control" name="title" value="{{ old('title') }}">
                             {{-- <input type="text" class="form-control" name="title"> --}}
@@ -38,7 +38,7 @@
                             @enderror
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <label>Mô tả*</label>
                             <textarea class="form-control" name="description" rows="3">{{ old('description') }}</textarea>
                             {{-- <input type="text" class="form-control" name="description" value="{{ old('description') }}" required> --}}
@@ -48,21 +48,21 @@
                             @enderror
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <label>Nội dung*</label>
                             {{-- <textarea class="form-control" name="content" rows="10" required>{{ old('content') }}</textarea> --}}
-                            <textarea id="content" class="form-control" name="content" rows="10" required>{{ old('content') }}</textarea>
+                            <textarea id="content" class="form-control" name="content" rows="10">{{ old('content') }}</textarea>
                             @error('content')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <label>Ngày xuất bản</label>
                             <input type="datetime-local" class="form-control" name="publish_date" value="{{ old('publish_date') }}">
                         </div>
                     </div>
-                    <div class="card-footer">
+                    <div class="card-footer mb-3">
                         <button type="submit" class="btn btn-primary">Tạo bài viết</button>
                         <a href="{{ route('posts.index') }}" class="btn btn-secondary">Hủy</a>
                     </div>

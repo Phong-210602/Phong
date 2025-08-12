@@ -28,7 +28,7 @@ class Post extends Model implements HasMedia
     ];
     public function getThumbnailUrlAttribute()
     {
-    return $this->getFirstMedia()?->getUrl() ?? '/images/default-thumbnail.jpg';
+    return $this->getFirstMedia()?->getUrl() ?? '/abc/avatar-cute-3.jpg';
     }
 
     public function user(): BelongsTo

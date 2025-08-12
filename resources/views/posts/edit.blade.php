@@ -24,7 +24,7 @@
                         @method('PUT')
 
                         <div class="mb-3 px-3 pt-3">
-                            <label class="form-label">Thumbnail</label> <br>
+                            <label class="form-label mb-3">Thumbnail</label> <br>
                             @if ($post->thumbnail_url)
                                 <div class="mb-2">
                                     <img src="{{ $post->thumbnail_url }}" alt="Thumbnail" style="max-width: 150px;">
@@ -37,7 +37,7 @@
                         </div>
 
                         <div class="card-body">
-                            <div class="form-group">
+                            <div class="form-group mb-3">
                                 <label>Tiêu đề</label>
                                 <input type="text" class="form-control" name="title"
                                     value="{{ old('title', $post->title) }}">
@@ -46,7 +46,7 @@
                                 @enderror
                             </div>
                             @if (auth()->user()->role === 'admin')
-                            <div class="form-group">
+                            <div class="form-group mb-3">
                                 <label for="status">Trạng thái</label>
                                 <select name="status" id="status">
                                     <option value="{{ App\Enums\PostStatus::DRAFT->value }}"
@@ -62,7 +62,7 @@
                             </div>
                             @endif
 
-                            <div class="form-group">
+                            <div class="form-group mb-3">
                                 <label>Mô tả</label>
                                 <textarea class="form-control" name="description" rows="3">{{ old('description', $post->description) }}</textarea>
                                 @error('description')
@@ -70,7 +70,7 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group mb-3">
                                 <label>Nội dung</label>
                                 <textarea id="content" class="form-control" name="content" rows="10">{{ old('content', $post->content) }}</textarea>
                                 @error('content')
@@ -78,14 +78,14 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group mb-3">
                                 <label>Ngày xuất bản</label>
                                 <input type="datetime-local" class="form-control" name="publish_date"
                                     value="{{ old('publish_date', $post->publish_date ? $post->publish_date->format('Y-m-d\TH:i') : '') }}">
                             </div>
                         </div>
 
-                        <div class="card-footer">
+                        <div class="card-footer mb-3">
                             <button type="submit" class="btn btn-primary">Cập nhật</button>
                             <a href="{{ route('posts.index') }}" class="btn btn-secondary">Hủy</a>
                         </div>

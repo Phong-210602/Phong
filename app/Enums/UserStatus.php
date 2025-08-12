@@ -8,4 +8,13 @@ enum UserStatus: int
     case REJECTED = 2;   // Bị từ chối
     case BLOCKED = 3;    // Bị khoá
     // case UNBLOCK = 4; // mở khoá
+     public function getLabel(): string
+    {
+        return match($this) {
+            self::PENDING  => 'Chờ phê duyệt',
+            self::APPROVED => 'Được phê duyệt',
+            self::REJECTED => 'Bị từ chối',
+            self::BLOCKED  => 'Bị khoá',
+        };
+    }
 }

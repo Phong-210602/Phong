@@ -6,6 +6,8 @@ use App\Models\Post;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Http\Resources\PostResource;
+use App\Services\PostService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
@@ -13,28 +15,19 @@ use Illuminate\Support\Facades\Auth;
 class PostController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @inheritdoc
      */
-    public function index() // Hiển thị danh sách bài viết
+    public function __construct (protected PostService $postService)
     {
-        // $posts = Post::with('user')->latest()->paginate(10);
-        //  $posts = Post::all();
-        // $posts = auth()->user()->posts;
-        /**
-         * @var \App\Models\User $user
-         */
-        if (auth()->user()->role === 'admin') {
-            // Admin xem tất cả
-            $posts = Post::all();
-        } else {
-            // User thường chỉ xem bài viết của chính mình
-            $posts = auth()->user()->posts;
+    }
+     public function index(Request $request)
+    {
+        if ($request->ajax()) {
+            $serviceAttributes = $this->postService->serverPaginationFilteringForAdmin($request->all());
+            return PostResource::collection($serviceAttributes);
         }
 
-        $draftPosts = Post::draft()->get();
-        $publicshedPosts = Post::published()->get();
-        $pendingPosts = Post::pending()->get();
-        return view('posts.index', compact('posts'));
+        return view('posts.index');
     }
 
     /**
