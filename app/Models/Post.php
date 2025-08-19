@@ -26,6 +26,10 @@ class Post extends Model implements HasMedia
         'publish_date',
         'status',
     ];
+    protected $casts = [ // $casts giúp là việc với Enum cho trường Status
+        // ... existing casts ...
+        'status' => PostStatus::class,
+    ];
     public function getThumbnailUrlAttribute()
     {
     return $this->getFirstMedia()?->getUrl() ?? '/abc/avatar-cute-3.jpg';

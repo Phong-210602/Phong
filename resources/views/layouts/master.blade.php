@@ -12,5 +12,6 @@
     </div>
     
     <script src="{{ asset('adminlte/dist/js/adminlte.min.js') }}"></script>
+    
 </body>
 </html>

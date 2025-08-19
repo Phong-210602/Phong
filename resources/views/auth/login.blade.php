@@ -27,6 +27,12 @@
                                 {{ session('success') }}
                             </div>
                         @endif
+                                              <!-- Thêm phần hiển thị thông báo thành công -->
+                    @if (session('status'))
+                        <div class="alert alert-success">
+                            {{ session('status') }}
+                        </div>
+                    @endif
 
                         <form method="POST" action="{{ route('logins') }}">
                             @csrf
@@ -69,10 +75,11 @@
                                     <button type="submit" class="btn btn-primary">
                                         {{ __('Đăng nhập') }}
                                     </button>
+                                    <a href="{{ route('password.request') }}" class="btn btn-link">
+                                        {{ __('Quên mật khẩu?') }}
+                                    </a>
 
-                                    <button type="submit" class="btn btn-primary">
-                                        {{ __('Reset') }}
-                                    </button>
+
                                 </div>
                             </div>
                         </form>

@@ -62,83 +62,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{-- @foreach ($posts as $post)
-                                            <tr>
-                                                <td class="px-6 py-4 whitespace-nowrap">
-                                                    <img class="w-8 h-8 rounded-ful" style="width: 100px"
-                                                        src="{{ $post->thumbnail_url }}" />
-                                                </td>
-                                                <td>{{ $post->id }}</td>
-                                                @if (auth()->user()->role === 'admin')
-                                                    <td>{{ $post->user->name }}</td>
-                                                @endif
-                                                <td style="word-wrap: break-word; max-width: 200px;">{{ $post->title }}
-                                                </td>
-                                                <td style="word-wrap: break-word; max-width: 200px;">
-                                                    {{ $post->description }}</td>
-
-
-
-                                                <td>
-                                                    @if ($post->status == App\Enums\PostStatus::DRAFT->value)
-                                                        <span class="badge bg-secondary">Bài viết mới</span>
-                                                    @elseif($post->status == App\Enums\PostStatus::PUBLISHED->value)
-                                                        <span class="badge bg-success">Chờ duyệt</span>
-                                                    @elseif($post->status == App\Enums\PostStatus::PENDING->value)
-                                                        <span class="badge bg-warning text-dark">Được duyệt</span>
-                                                    @endif
-                                                </td>
-
-                                                <td>{{ $post->created_at->format('d/m/Y') }}</td>
-                                                <td>
-
-                                                    <button type="button" class="btn delete-btn"
-                                                        data-id="{{ $post->id }}" title="Xoá">
-                                                        <svg viewBox="0 0 24 24" width="20" height="27"
-                                                            stroke="currentColor" stroke-width="2" fill="none"
-                                                            stroke-linecap="round" stroke-linejoin="round">
-                                                            <polyline points="3 6 5 6 21 6" />
-                                                            <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
-                                                            <path d="M10 11v6" />
-                                                            <path d="M14 11v6" />
-                                                            <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
-                                                        </svg>
-                                                    </button>
-
-
-                                                    <a href="{{ route('posts.edit', $post) }}" class="btn btn-sm"
-                                                        title="Sửa">
-                                                        <svg viewBox="0 0 24 24" width="20" height="28"
-                                                            stroke="currentColor" stroke-width="2" fill="none"
-                                                            stroke-linecap="round" stroke-linejoin="round">
-                                                            <path
-                                                                d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                                                            <path
-                                                                d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-                                                        </svg>
-                                                    </a>
-
-                                                    <a href="{{ route('posts.show', $post) }}"
-                                                        class="btn btn-sm" title="Xem">
-                                                        <svg viewBox="0 0 24 24" width="20" height="28"
-                                                            stroke="currentColor" stroke-width="2" fill="none"
-                                                            stroke-linecap="round" stroke-linejoin="round">
-                                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                                                            <circle cx="12" cy="12" r="3" />
-                                                        </svg>
-                                                    </a>
-
-                                                </td>
-                                            </tr>
-                                        @endforeach --}}
                                 </tbody>
                             </table>
-                            {{-- @else
-                                <div class="text-center py-4">
-                                    <p>Bạn chưa có bài viết nào.</p>
-                                    <a href="{{ route('posts.create') }}" class="btn btn-primary">Tạo bài viết đầu tiên</a>
-                                </div>
-                            @endif --}}
+
                         </div>
                     </div>
                 </div>
@@ -159,16 +85,23 @@
                     },
                     "stripeClasses": [],
                     "lengthMenu": [5, 10, 50],
-                    "pageLength": 5,
+                    "pageLength": 1,
                     "processing": true,
                     "serverSide": true,
                     "ordering": true,
                     "ajax": {
                         "url": "{{ route('posts.index') }}",
                         "data": function(d) {
+                            // console.log("Lượt vẽ trước khi gửi AJAX:", d.draw);
                             drawDT = d.draw;
+                            // console.log("Số bản ghi mỗi trang (d.length):", d.length);
+                            // console.log("Tham số limit gửi đến server:", d.limit);
                             d.limit = d.length;
                             d.page = d.start / d.length + 1;
+                            // console.log("d.start:", d.start);
+                            // console.log("Số bản ghi mỗi trang (d.length):", d.length);
+                            // console.log("Số trang hiện tại (d.page):", d.page);
+                            // d.status = 'abc';
                         },
                         "dataSrc": function(res) {
                             res.draw = drawDT;
@@ -177,8 +110,7 @@
                             return res.data;
                         }
                     },
-                    "columns": [
-                        {
+                    "columns": [{
                             "data": "thumbnail",
                             "class": "text-center",
                             "orderable": true,
@@ -195,7 +127,7 @@
                             "class": "text-center",
                             "orderable": true,
                             "render": function(data, type, full) {
-                                return  `${data}`;
+                                return `${data}`;
                             }
 
                         },
@@ -204,7 +136,7 @@
                             "class": "text-center",
                             "orderable": true,
                             "render": function(data, type, full) {
-                                return  data;
+                                return data;
                             }
 
                         },
@@ -213,7 +145,7 @@
                             "class": "text-center",
                             "orderable": true,
                             "render": function(data, type, full) {
-                                return  data;
+                                return data;
                             }
 
                         },
@@ -223,12 +155,12 @@
                             "orderable": true,
                             "render": function(data, type, full) {
                                 if (data == 0)
-                                        return `<span class="badge bg-secondary">Bài viết mới</span>`;
-                                else if(data == 1)
-                                        return `<span class="badge bg-success">Chờ duyệt</span>`;                            
-                                else if(data == 2)
+                                    return `<span class="badge bg-secondary">Bài viết mới</span>`;
+                                else if (data == 1)
+                                    return `<span class="badge bg-success">Chờ duyệt</span>`;
+                                else if (data == 2)
                                     return `<span class="badge bg-warning text-dark">Được duyệt</span>`;
-                               
+
                             }
 
                         },
@@ -236,15 +168,15 @@
                             "data": "created_at",
 
                         },
-                         {
-                        "data": "id",
-                        "class": "text-center",
-                        "orderable": true,
-                        "render": function (data, type, full) {
-                            let urlEdit = `{{ route('posts.edit', ':id') }}`.replace(':id', data);
-                            let urlShow = `{{ route('posts.show', ':id') }}`.replace(':id', data);
+                        {
+                            "data": "id",
+                            "class": "text-center",
+                            "orderable": true,
+                            "render": function(data, type, full) {
+                                let urlEdit = `{{ route('posts.edit', ':id') }}`.replace(':id', data);
+                                let urlShow = `{{ route('posts.show', ':id') }}`.replace(':id', data);
 
-                            return `
+                                return `
                             <button type="button" class="btn delete-btn"
                                                         data-id="${data}" title="Xoá">
                                                         <svg viewBox="0 0 24 24" width="20" height="27"
@@ -281,8 +213,8 @@
                                                         </svg>
                                                     </a>   
                             `;
+                            }
                         }
-                    }
                     ]
 
                 });
@@ -302,14 +234,11 @@
                                 if (res.success) {
                                     alert(res.message);
                                     // Xoá dòng khỏi DataTable
-                                     $("#posts-table").DataTable().ajax.reload(null, false);
+                                    $("#posts-table").DataTable().ajax.reload(null, false);
                                 } else {
                                     alert('Không thể xoá bài viết');
                                 }
                             },
-                            error: function() {
-                                alert('Có lỗi xảy ra khi xoá');
-                            }
                         });
                     }
                 });

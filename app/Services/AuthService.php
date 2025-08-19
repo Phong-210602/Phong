@@ -93,7 +93,7 @@ class AuthService
             } catch (\Exception $e) {
                 // Log lỗi gửi email nhưng không ảnh hưởng form đăng ký
                 Log::error('Failed to send welcome email:' . $e->getMessage());
-            }
+            } 
 
             return [
                 'success' => true,

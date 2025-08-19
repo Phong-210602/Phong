@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\PostStatus;
 use App\Models\Post;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
@@ -14,17 +15,18 @@ use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
-    /**
-     * @inheritdoc
-     */
+    
     public function __construct (protected PostService $postService)
     {
     }
-     public function index(Request $request)
+    public function index(Request $request)
     {
         if ($request->ajax()) {
-            $serviceAttributes = $this->postService->serverPaginationFilteringForAdmin($request->all());
-            return PostResource::collection($serviceAttributes);
+            $data = array_merge($request->all(), ['user_id'=>auth()->id()]); // lấy ID của user hiện tại đang đăng nhập.
+            // $data = $request->all();
+
+            $posts = $this->postService->serverPaginationFilteringForAdmin($data);
+            return PostResource::collection($posts);
         }
 
         return view('posts.index');
@@ -95,7 +97,7 @@ class PostController extends Controller
             return redirect()->route('posts.index');
         }
 
-
+        // dd(123);
         // Cập nhật bài viết
         $post->update([
             'title' => $request->title,
@@ -103,7 +105,7 @@ class PostController extends Controller
             'description' => $request->description,
             'content' => $request->content,
             'publish_date' => $request->publish_date,
-            'status' => 1,2,3,
+            'status' => PostStatus::PENDING->value,
         ]);
         return redirect()->route('posts.index')->with('success', 'Cập nhập bài viết thành công!');
     }

@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
 
-class StoreUserRequest extends FormRequest
+class UpdateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,35 +25,23 @@ class StoreUserRequest extends FormRequest
         return [
             'first_name' => 'required|string|max:30',
             'last_name'  => 'required|string|max:30',
-            'address'    => 'required|string|max:255',
-            'email'      => [
+            'email'      => 
                 'required',
                 'string',
                 'max:100',
                 'unique:users,email',
-            ],
-            'password'   => [
-                'required',
-                'confirmed',
-                Password::min(8)->mixedCase()->symbols(),
-            ],
+
         ]; 
+        
     }
-       public function messages(): array
+    public function messages(): array
     {
         return [
             'first_name.required' => 'Họ là bắt buộc',
             'last_name.required' => 'Tên là bắt buộc',
-            'address.required' => 'Địa chỉ là bắt buộc',
-            'address.max'      => 'Địa chỉ không được vượt quá 255 ký tự',
             'email.required' => 'Email là bắt buộc',
             'email.email' => 'Email không đúng định dạng',
             'email.unique' => 'Email đã được sử dụng',
-            'password.required' => 'Mật khẩu là bắt buộc',
-            'password.min' => 'Mật khẩu phải có ít nhất 8 ký tự',
-            'password.confirmed' => 'Xác nhận mật khẩu không khớp',
-            'password.mixedCase' => 'Mật khẩu phải có cả chữ hoa và chữ thường',
-            'password.symbols'   => 'Mật khẩu phải chứa ít nhất 1 ký tự đặc biệt',
         ];
     }
 }

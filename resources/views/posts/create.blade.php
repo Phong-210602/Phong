@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Tạo bài viết mới</h1>
+                    <h3>Tạo bài viết</h3>
                 </div>
             </div>
         </div>
@@ -22,7 +22,7 @@
                 <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3"> 
-                        <label class="form label">Thumbnail</label> <br>
+                        <label class="form label">Ảnh</label> <br>
                          <input type="file" id="image" name="image">
                             @error('image')
                                 <span class="text-danger">{{ $message }}</span>
@@ -50,7 +50,6 @@
 
                         <div class="form-group mb-3">
                             <label>Nội dung*</label>
-                            {{-- <textarea class="form-control" name="content" rows="10" required>{{ old('content') }}</textarea> --}}
                             <textarea id="content" class="form-control" name="content" rows="10">{{ old('content') }}</textarea>
                             @error('content')
                                 <span class="text-danger">{{ $message }}</span>

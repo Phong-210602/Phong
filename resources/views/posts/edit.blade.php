@@ -24,7 +24,7 @@
                         @method('PUT')
 
                         <div class="mb-3 px-3 pt-3">
-                            <label class="form-label mb-3">Thumbnail</label> <br>
+                            <label class="form-label mb-3">Ảnh</label> <br>
                             @if ($post->thumbnail_url)
                                 <div class="mb-2">
                                     <img src="{{ $post->thumbnail_url }}" alt="Thumbnail" style="max-width: 150px;">
@@ -81,7 +81,8 @@
                             <div class="form-group mb-3">
                                 <label>Ngày xuất bản</label>
                                 <input type="datetime-local" class="form-control" name="publish_date"
-                                    value="{{ old('publish_date', $post->publish_date ? $post->publish_date->format('Y-m-d\TH:i') : '') }}">
+                                    {{-- value="{{ old('publish_date', $post->publish_date ? $post->publish_date->format('Y-m-d\TH:i') : '') }}"> --}}
+                                    value="{{ old('publish_date', $post->publish_date ?? '') }}">
                             </div>
                         </div>
 
