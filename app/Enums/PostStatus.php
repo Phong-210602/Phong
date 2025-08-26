@@ -5,8 +5,8 @@ namespace App\Enums;
 enum PostStatus: int
 {
     case DRAFT = 0;     // Bài viết mới
-    case PUBLISHED = 1; // Chờ duyệt
-    case PENDING = 2;   // Được duyệt
+    case PUBLISHED = 1; // Đã xuất bản
+    case PENDING = 2;   // Chờ duyệt
 
 }
 

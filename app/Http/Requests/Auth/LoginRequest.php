@@ -28,29 +28,26 @@ class LoginRequest extends FormRequest
      * Định nghĩa các quy tắc validation
      * Đây là VALIDATION - chỉ kiểm tra format dữ liệu
      */
-    // public function rules(): array
-    // {
-    //     return [
-    //         'email' => 'required|email',
-    //         'password'   => [
-    //             'required',
-    //             Password::min(8)->mixedCase()->symbols(),
-    //         ],
-    //     ];
-    // }
+    public function rules(): array
+    {
+        return [
+            'email' => 'required|email',
+            'password'   => [
+                'required',
+                Password::min(8)->mixedCase()->symbols(),
+            ],
+        ];
+    }
 
-    /**
-     * Thông báo lỗi validation bằng tiếng Việt
-     */
-    // public function messages(): array
-    // {
-    //     return [
-    //         'email.required' => 'Email là bắt buộc',
-    //         'email.email' => 'Email không đúng định dạng',
-    //         'password.required' => 'Mật khẩu là bắt buộc',
-    //         'password.min' => 'Mật khẩu phải có ít nhất 8 ký tự',
-    //         'password.mixedCase' => 'Mật khẩu phải có cả chữ hoa và chữ thường',
-    //         'password.symbols'   => 'Mật khẩu phải chứa ít nhất 1 ký tự đặc biệt',
-    //     ];
-    // }
+    public function messages(): array
+    {
+        return [
+            'email.required' => 'Email là bắt buộc',
+            'email.email' => 'Email không đúng định dạng',
+            'password.required' => 'Mật khẩu là bắt buộc',
+            'password.min' => 'Mật khẩu phải có ít nhất 8 ký tự',
+            'password.mixedCase' => 'Mật khẩu phải có cả chữ hoa và chữ thường',
+            'password.symbols'   => 'Mật khẩu phải chứa ít nhất 1 ký tự đặc biệt',
+        ];
+    }
 }

@@ -30,7 +30,9 @@ class RegisterController extends Controller
     public function register(RegisterRequest $request)
     {   
 
-        $result = $this->authService->registerUser($request->validated());
+        $result = $this->authService->registerUser(
+        $request->validated()
+        );
         if (!$result['success']) {
             return redirect()->back()
                 ->withErrors(['general' => $result['message']])

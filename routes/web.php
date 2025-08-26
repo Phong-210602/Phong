@@ -21,9 +21,10 @@ Route::post('/login', [LoginController::class, 'login'])->name('logins');
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register'])->name('registers');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+// quên mật khẩu
 Route::get('/forgot-password', [ForgotPasswordController::class, 'showForgotPasswordForm'])->name('password.request');
 Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink'])->name('password.email');
-
+// đặt lại mật khẩu
 Route::get('/reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
 Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword'])->name('password.update');
 
@@ -54,3 +55,5 @@ Route::middleware('auth')->group(function(){
     // Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
     Route::delete('/user/posts/delete-all', [PostController::class, 'destroyAll'])->name('posts.destroyAll');
 });
+Route::get('/news', [PostController::class, 'news'])->name('news.index');
+Route::get('/news/{post:slug}', [PostController::class, 'newsShow'])->name('news.show');

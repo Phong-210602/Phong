@@ -29,12 +29,12 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'first_name' => 'required|string|max:255',                      // Họ: bắt buộc, string,tối đa 255 ký tự
-            'last_name' => 'required|string|max:255',                        // Tên: bắt buộc, string, tối đa 255 ký tự
-            'email' => 'required|string|email|max:255|unique:users,email', // email: bắt buộc, đúng format, không trùng
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',     
+            'email' => 'required|string|email|max:255|unique:users,email',
             'password'   => [
                 'required',
-                Password::min(8)->mixedCase()->symbols(), // password: bắt buộc, ít nhất 8 ký tự, hoa, thường, ký tự đặc biệt
+                Password::min(8)->mixedCase()->symbols(),
             ],
             'address' => 'nullable|string|max:500',                         // Địa chỉ: có thể để trống, tối đa 500 ký tự
         ];

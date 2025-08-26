@@ -1,6 +1,6 @@
 @extends('layouts.adminlte')
 
-@section('title', 'Thêm người dùng')
+@section('title', 'Chỉnh sửa người dùng')
 
 @section('content')
 <div class="content-wrapper">
@@ -22,7 +22,7 @@
                         <div class="form-group mb-3">
                             <label for="last_name">Họ <span class="text-danger">*</span></label>
                             <input type="text" id="last_name" name="last_name"
-                                   class="form-control w-25"
+                                   class="form-control"
                                    placeholder="Nhập họ"
                                    value="{{ old('last_name', $user->last_name) }}">
                             @error('last_name')
@@ -34,7 +34,7 @@
                         <div class="form-group mb-3">
                             <label for="first_name">Tên <span class="text-danger">*</span></label>
                             <input type="text" id="first_name" name="first_name"
-                                   class="form-control w-25"
+                                   class="form-control"
                                    placeholder="Nhập tên"
                                    value="{{ old('first_name', $user->first_name) }}">
                             @error('first_name')
@@ -46,7 +46,7 @@
                         <div class="form-group mb-3">
                             <label for="email">Email <span class="text-danger">*</span></label>
                             <input type="email" id="email" name="email"
-                                   class="form-control w-25"
+                                   class="form-control"
                                    placeholder="Nhập email"
                                    value="{{ old('email', $user->email) }}">
                             @error('email')
@@ -58,7 +58,7 @@
                         <div class="form-group mb-3">
                             <label for="address"> Địa chỉ <span class="text-danger">*</span></label>
                             <input type="address" id="address" name="address"
-                                   class="form-control w-25"
+                                   class="form-control"
                                    placeholder="Nhập địa chỉ"
                                    value="{{ old('address', $user->address) }}">
                             @error('address')

@@ -1,13 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ForgotPasswordRequest;
-use Illuminate\Http\Request;
-// use Illuminate\Validation\Rules\Password;
+use App\Http\Requests\Password\ForgotPasswordRequest;
 use Illuminate\Support\Facades\Password;
-// use 'App\Http\Controllers\toastr
 
 class ForgotPasswordController extends Controller
 {  
@@ -15,7 +11,7 @@ class ForgotPasswordController extends Controller
     {   
         return view('auth.forgot-password');
     }
-    public function sendResetLink(Request $request)
+    public function sendResetLink(ForgotPasswordRequest $request)
     {
        
             // return view('test');

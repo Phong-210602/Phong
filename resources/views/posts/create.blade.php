@@ -18,11 +18,10 @@
                 <div class="card-header">
                     <h3 class="card-title">Thông tin bài viết</h3>
                 </div>
-                {{-- <form action="{{ route('posts.store') }}" method="POST"> --}}
                 <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3"> 
-                        <label class="form label">Ảnh</label> <br>
+                        <label class="form label" style="margin-left: 20px;">Ảnh</label> <br>
                          <input type="file" id="image" name="image">
                             @error('image')
                                 <span class="text-danger">{{ $message }}</span>
@@ -30,18 +29,16 @@
                         </div>
                     <div class="card-body">
                         <div class="form-group mb-3">
-                            <label>Tiêu đề*</label>
-                            <input type="text" class="form-control" name="title" value="{{ old('title') }}">
-                            {{-- <input type="text" class="form-control" name="title"> --}}
+                            <label for="title">Tiêu đề <span class="text-danger">*</span></label>
+                            <input type="text" id="title" name="title" class="form-control" placeholder="Nhập tiêu đề" value="{{ old('title') }}">
                             @error('title')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
 
                         <div class="form-group mb-3">
-                            <label>Mô tả*</label>
-                            <textarea class="form-control" name="description" rows="3">{{ old('description') }}</textarea>
-                            {{-- <input type="text" class="form-control" name="description" value="{{ old('description') }}" required> --}}
+                            <label for="description">Mô tả <span class="text-danger">*</span></label>
+                            <textarea class="form-control" placeholder="Nhập mô tả" name="description" rows="3">{{ old('description') }}</textarea>
 
                             @error('description')
                                 <span class="text-danger">{{ $message }}</span>
@@ -49,15 +46,15 @@
                         </div>
 
                         <div class="form-group mb-3">
-                            <label>Nội dung*</label>
-                            <textarea id="content" class="form-control" name="content" rows="10">{{ old('content') }}</textarea>
+                            <label for="content">Nội dung <span class="text-danger">*<span></label>
+                            <textarea id="content" class="form-control" placeholder="Nhập nội dung" name="content" rows="10">{{ old('content') }}</textarea>
                             @error('content')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
 
                         <div class="form-group mb-3">
-                            <label>Ngày xuất bản</label>
+                            <label for="publish_date">Ngày xuất bản <span class="text-danger">*</span></label>
                             <input type="datetime-local" class="form-control" name="publish_date" value="{{ old('publish_date') }}">
                         </div>
                     </div>

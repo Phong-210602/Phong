@@ -30,6 +30,8 @@ class UpdateUserRequest extends FormRequest
                 'string',
                 'max:100',
                 'unique:users,email',
+            'address'  => 'required|string|max:250',
+
 
         ]; 
         

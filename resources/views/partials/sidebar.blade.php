@@ -41,12 +41,4 @@
         </nav>
     </div>
 </aside>
-<style>
-    .nav-link.active {
-        background-color: #007afdff !important; /* xanh */
-        color: #fff !important;
-    }
-    .nav-link.active i {
-        color: #fff !important;
-    }
-</style>
+

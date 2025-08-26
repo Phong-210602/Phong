@@ -85,7 +85,7 @@
                     },
                     "stripeClasses": [],
                     "lengthMenu": [5, 10, 50],
-                    "pageLength": 1,
+                    "pageLength": 5,
                     "processing": true,
                     "serverSide": true,
                     "ordering": true,
@@ -157,9 +157,9 @@
                                 if (data == 0)
                                     return `<span class="badge bg-secondary">Bài viết mới</span>`;
                                 else if (data == 1)
-                                    return `<span class="badge bg-success">Chờ duyệt</span>`;
+                                    return `<span class="badge bg-success">Đã xuất bản</span>`;
                                 else if (data == 2)
-                                    return `<span class="badge bg-warning text-dark">Được duyệt</span>`;
+                                    return `<span class="badge bg-warning text-dark">Chờ phê duyệt</span>`;
 
                             }
 

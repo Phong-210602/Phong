@@ -17,11 +17,9 @@ class ProfileController extends Controller
     public function update(ProfileUserRequest $request)
     {
         $user = auth()->user();
-        $user->update([
-            'last_name' => $request->last_name,
-            'first_name' => $request->first_name,
-            'address' => $request->address,
-        ]);
+        $user->update(
+        $request->validated()
+        );
         return redirect()->route('users.index')->with('success', 'Cập nhập người dùng thành công!');
     }
 }

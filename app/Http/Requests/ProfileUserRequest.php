@@ -25,6 +25,7 @@ class ProfileUserRequest extends FormRequest
             'first_name' => 'required|string|max:30',
             'last_name'  => 'required|string|max:20',
             'address'    => 'required|string|max:200',
+             'extra'      => 'nullable|string',
         ];
     }
     public function messages(): array

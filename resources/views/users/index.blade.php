@@ -2,13 +2,12 @@
 @section('title', 'Danh sách người dùng')
 
 @section('content')
-    @if (session('success'))
+   @if (session('success'))
         <div class="alert alert-success alert-dismissible">
             <button type="button" class="close" data-bs-dismiss="alert" aria-hidden="true">×</button>
             {{ session('success') }}
         </div>
     @endif
-
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">Danh sách người dùng</h3>
@@ -100,7 +99,7 @@
                     let urlEdit    = `{{ route('users.edit', ':id') }}`.replace(':id', data);
                     let urlBlock   = `{{ route('users.block', ':id') }}`.replace(':id', data);
 
-                    if (full.status == 1) {
+                    // if (full.status == 1) {
                         return `
                             <form action="${urlBlock}" method="POST" style="display:inline;">
                                 @csrf
@@ -117,8 +116,18 @@
                                     </svg>
                                 </button>
                             </form>
+                                <a href="${urlEdit}" class="btn btn-sm" title="Sửa">
+                            <svg viewBox="0 0 24 24" width="20" height="28"
+                                stroke="currentColor" stroke-width="2" fill="none"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0
+                                    0 2 2h14a2 2 0 0 0 2-2v-7" />
+                                <path d="M18.5 2.5a2.121 2.121 0 0 1
+                                    3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                            </svg>
+                        </a>
                         `;
-                    }
+                    // }
 
                     return `
                         <form action="${urlApprove}" method="POST" style="display:inline;">
@@ -158,16 +167,7 @@
                                 </svg>
                             </button>
                         </form>
-                         <a href="${urlEdit}" class="btn btn-sm" title="Sửa">
-                            <svg viewBox="0 0 24 24" width="20" height="28"
-                                stroke="currentColor" stroke-width="2" fill="none"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0
-                                    0 2 2h14a2 2 0 0 0 2-2v-7" />
-                                <path d="M18.5 2.5a2.121 2.121 0 0 1
-                                    3 3L12 15l-4 1 1-4 9.5-9.5z" />
-                            </svg>
-                        </a>
+                     
                     `;
                 }
             },

@@ -44,7 +44,7 @@ class LoginController extends Controller
      * 
      * @param LoginRequest $request Request đã được validation tự động
      */
-    public function login(LoginRequest $request)
+    public function login(Request $request)
     {
         // Bước 1: Validation đã tự động chạy trong LoginRequest
 

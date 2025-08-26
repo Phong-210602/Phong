@@ -38,50 +38,52 @@
 
                         <div class="card-body">
                             <div class="form-group mb-3">
-                                <label>Tiêu đề</label>
-                                <input type="text" class="form-control" name="title"
-                                    value="{{ old('title', $post->title) }}">
+                                <label for="title">Tiêu đề <span class="text-danger">*</span></label>
+                                <input type="text" id="title" name="title" class="form-control"
+                                    placeholder="Nhập tiêu đề" value="{{ old('title') }}">
                                 @error('title')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                             @if (auth()->user()->role === 'admin')
-                            <div class="form-group mb-3">
-                                <label for="status">Trạng thái</label>
-                                <select name="status" id="status">
-                                    <option value="{{ App\Enums\PostStatus::DRAFT->value }}"
-                                        {{ $post->status == App\Enums\PostStatus::DRAFT->value ? 'selected' : '' }}>Bài viết mới</option>
-                                    <option value="{{ App\Enums\PostStatus::PUBLISHED->value }}"
-                                        {{ $post->status == App\Enums\PostStatus::PUBLISHED->value ? 'selected' : '' }}>Chờ duyệt </option>
-                                    <option value="{{ App\Enums\PostStatus::PENDING->value }}"
-                                        {{ $post->status == App\Enums\PostStatus::PENDING->value ? 'selected' : '' }}>Được duyệt</option>
+                                <div class="form-group mb-3">
+                                    <label for="status">Trạng thái</label>
+                                    <select name="status" id="status">
+                                        <option value="{{ App\Enums\PostStatus::DRAFT->value }}"
+                                            {{ $post->status == App\Enums\PostStatus::DRAFT->value ? 'selected' : '' }}>Bài
+                                            viết mới</option>
+                                        <option value="{{ App\Enums\PostStatus::PUBLISHED->value }}"
+                                            {{ $post->status == App\Enums\PostStatus::PUBLISHED->value ? 'selected' : '' }}>
+                                            Chờ duyệt </option>
+                                        <option value="{{ App\Enums\PostStatus::PENDING->value }}"
+                                            {{ $post->status == App\Enums\PostStatus::PENDING->value ? 'selected' : '' }}>
+                                            Được duyệt</option>
 
-                                    {{-- <option value="" {{ $post->status == 2 ? 'selected' : '' }}>Đã xuất bản</option>
+                                        {{-- <option value="" {{ $post->status == 2 ? 'selected' : '' }}>Đã xuất bản</option>
                                     <option value="" {{ $post->status == 3 ? 'selected' : '' }}>Chờ duyệt</option> --}}
-                                </select>
-                            </div>
+                                    </select>
+                                </div>
                             @endif
 
                             <div class="form-group mb-3">
-                                <label>Mô tả</label>
-                                <textarea class="form-control" name="description" rows="3">{{ old('description', $post->description) }}</textarea>
+                                <label for="description">Mô tả <span class="text-danger">*</span></label>
+                                <textarea class="form-control" placeholder="Nhập mô tả" name="description" rows="3">{{ old('description') }}</textarea>
+
                                 @error('description')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-
-                            <div class="form-group mb-3">
-                                <label>Nội dung</label>
-                                <textarea id="content" class="form-control" name="content" rows="10">{{ old('content', $post->content) }}</textarea>
-                                @error('content')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
+                             <div class="form-group mb-3">
+                            <label for="content">Nội dung <span class="text-danger">*<span></label>
+                            <textarea id="content" class="form-control" placeholder="Nhập nội dung" name="content" rows="10">{{ old('content') }}</textarea>
+                            @error('content')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
 
                             <div class="form-group mb-3">
                                 <label>Ngày xuất bản</label>
                                 <input type="datetime-local" class="form-control" name="publish_date"
-                                    {{-- value="{{ old('publish_date', $post->publish_date ? $post->publish_date->format('Y-m-d\TH:i') : '') }}"> --}}
                                     value="{{ old('publish_date', $post->publish_date ?? '') }}">
                             </div>
                         </div>

@@ -10,19 +10,18 @@ use App\Http\Requests\UpdatePostRequest;
 use App\Http\Resources\PostResource;
 use App\Services\PostService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
-    
-    public function __construct (protected PostService $postService)
-    {
-    }
+
+    public function __construct(protected PostService $postService) {}
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = array_merge($request->all(), ['user_id'=>auth()->id()]); // lấy ID của user hiện tại đang đăng nhập.
+            $data = array_merge($request->all(), ['user_id' => auth()->id()]); // lấy ID của user hiện tại đang đăng nhập.
             // $data = $request->all();
 
             $posts = $this->postService->serverPaginationFilteringForAdmin($data);
@@ -80,7 +79,7 @@ class PostController extends Controller
     {
         // Chỉ cho phép admin hoặc chủ bài viết
         if (auth()->user()->role !== 'admin' && $post->user_id != Auth::id()) {
-             abort(404);
+            abort(404);
         }
 
         return view('posts.edit', compact('post'));
@@ -118,9 +117,9 @@ class PostController extends Controller
     {
         $post->delete();
         return response()->json([
-        'success' => true,
-        'message' => 'Xoá bài viết thành công!'
-    ]);
+            'success' => true,
+            'message' => 'Xoá bài viết thành công!'
+        ]);
     }
     public function destroyAll()
     {
@@ -131,5 +130,27 @@ class PostController extends Controller
         $user->posts()->delete();
 
         return redirect()->route('posts.index')->with('success', 'Đã xoá tất cả bài viết của bạn.');
+    }
+    
+    
+    
+    public function news()
+    {
+
+    $today = Carbon::today();
+
+    $posts = Post::whereDate('created_at', $today)
+                 ->where('status', PostStatus::PUBLISHED)
+                 ->latest() // lấy bài viết mới nhât lên đầu tiên
+                 ->paginate(5);
+                 
+
+    return view('news.index', compact('posts'));
+    }
+
+    // Trang chi tiết bài viết
+    public function newsShow(Post $post)
+    {
+        return view('news.show', compact('post'));
     }
 }

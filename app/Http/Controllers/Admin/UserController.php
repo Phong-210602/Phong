@@ -25,11 +25,7 @@ class UserController extends Controller
 
         return view('users.index');
     }
-    // public function index(){ // hiển thị danh sách người dùng
-    //     $users = User::all();
-    //     return view('users.index', compact('users'));
 
-    // }
     public function create()
     {
         return view('users.create');
@@ -49,6 +45,7 @@ class UserController extends Controller
             ->route('users.index')
             ->with('success', 'Tạo người dùng thành công');
     }
+
     public function edit(User $user)
     {
         // Chỉ cho phép admin hoặc chính chủ user đó
@@ -61,17 +58,12 @@ class UserController extends Controller
 
     public function update(UpdateUserRequest $request,  User $user)
     {
-        // Cập nhật bài viết
-        $user->update([
-            'last_name' => $request->last_name,
-            'first_name' => $request->first_name,
-            'email' => $request->email,
-            'address' => $request->address,
-            'publish_date' => $request->publish_date,
-            // 'status' => 1,2,3,
-        ]);
-        return redirect()->route('users.index')->with('success', 'Cập nhập người dùng thành công!');
+        $user->update(
+            $request->validated()
+        );
+        return redirect()->route('users.index')->with('success', 'Cập nhập người dùng thành công');
     }
+
      public function destroy(User $user)
     {
         $user->delete();
@@ -80,6 +72,7 @@ class UserController extends Controller
         'message' => 'Xoá người dùng thành công!'
     ]);
     }
+
     public function approve($id)
     {
         $user = User::findOrFail($id);
@@ -88,6 +81,7 @@ class UserController extends Controller
         return redirect()->route('users.index')
             ->with('success', $user->status->getLabel());
     }
+
     public function reject($id)
     {
         $user = User::findOrFail($id);
@@ -96,6 +90,7 @@ class UserController extends Controller
         return redirect()->route('users.index')
             ->with('success', $user->status->getLabel());
     }
+
     public function block($id)
     {
         $user = User::findOrFail($id);
@@ -104,12 +99,4 @@ class UserController extends Controller
         return redirect()->route('users.index')
             ->with('success',  $user->status->getLabel());
     }
-    // public function unblock($id)
-    // {
-    //     $user = User::findOrFail($id);
-    //     $user->update(['status' => UserStatus::UNBLOCK]);
-
-    //     return redirect()->route('users.index')
-    //         ->with('success', 'Đã mở khoá người dùng thành công!');
-    // }
 }
